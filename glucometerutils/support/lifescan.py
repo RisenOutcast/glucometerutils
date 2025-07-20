@@ -8,7 +8,7 @@ from glucometerutils import exceptions
 
 
 class MissingChecksum(exceptions.InvalidResponse):
-    """The response misses the expected 4-digits checksum."""
+    # The response misses the expected 4-digits checksum.
 
     def __init__(self, response: str):
         super(MissingChecksum, self).__init__(
@@ -17,7 +17,7 @@ class MissingChecksum(exceptions.InvalidResponse):
 
 
 class InvalidSerialNumber(exceptions.Error):
-    """The serial number is not as expected."""
+    # The serial number is not as expected.
 
     def __init__(self, serial_number: str):
         super(InvalidSerialNumber, self).__init__(
@@ -31,17 +31,17 @@ class MalformedCommand(exceptions.InvalidResponse):
 
 
 def crc_ccitt(data: bytes) -> int:
-    """Calculate the CRC-16-CCITT with LifeScan's common seed.
+    # Calculate the CRC-16-CCITT with LifeScan's common seed.
 
-    Args:
-      data: (bytes) the data to calculate the checksum of
+    # Args:
+    #  data: (bytes) the data to calculate the checksum of
 
-    Returns:
-      (int) The 16-bit integer value of the CRC-CCITT calculated.
+    # Returns:
+    #  (int) The 16-bit integer value of the CRC-CCITT calculated.
 
-    This function uses the non-default 0xFFFF seed as used by multiple
-    LifeScan meters.
-    """
+    # This function uses the non-default 0xFFFF seed as used by multiple
+    # LifeScan meters.
+
     crc = 0xFFFF
 
     for byte in data:

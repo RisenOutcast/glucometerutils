@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2013 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Tests for the common routines."""
+# Tests for the common routines.#
 
 # pylint: disable=protected-access,missing-docstring
 
@@ -124,11 +124,11 @@ class TestKetoneReading(unittest.TestCase):
         )
 
     def test_measure_method(self):
-        """Raise an exception if an invalid measurement method is provided.
+        # Raise an exception if an invalid measurement method is provided.
 
-        We allow measure_method as a parameter for compatibility with the other
-        Readings, but we don't want anything _but_ the BLOOD_SAMPLE method.
-        """
+        # We allow measure_method as a parameter for compatibility with the other
+        # Readings, but we don't want anything _but_ the BLOOD_SAMPLE method.
+
         with self.subTest("No measure_method parameter."):
             self.assertIsNotNone(common.KetoneReading(TEST_DATETIME, 100))
 

@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2019 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Tests for the FreeStyle Optium driver."""
+# Tests for the FreeStyle Optium driver.
 
 # pylint: disable=protected-access,missing-docstring
 

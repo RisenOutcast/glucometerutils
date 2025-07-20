@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2013 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Tests for the LifeScan OneTouch Ultra Mini driver."""
+# Tests for the LifeScan OneTouch Ultra Mini driver.
 
 # pylint: disable=protected-access,missing-docstring
 

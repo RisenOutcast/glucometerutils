@@ -10,12 +10,10 @@ import construct
 
 
 class Timestamp(construct.Adapter):
-    """Adapter for converting datetime object into timestamps.
+    # Adapter for converting datetime object into timestamps.
 
-    Take two parameters: the subcon object to output the resulting timestamp as,
-    and an optional epoch offset to the UNIX Epoch.
-
-    """
+    # Take two parameters: the subcon object to output the resulting timestamp as,
+    # and an optional epoch offset to the UNIX Epoch.
 
     __slots__ = ["epoch"]
 

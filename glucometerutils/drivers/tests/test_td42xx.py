@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2019 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Tests for the TD-42xx driver."""
+# Tests for the TD-42xx driver.
 
 # pylint: disable=protected-access,missing-docstring
 

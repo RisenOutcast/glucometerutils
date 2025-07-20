@@ -26,7 +26,7 @@ class GlucometerDevice(abc.ABC):
 
     @abc.abstractmethod
     def get_meter_info(self) -> common.MeterInfo:
-        """Return the device information in structured form."""
+        # Return the device information in structured form.
         pass
 
     @abc.abstractmethod
@@ -35,7 +35,7 @@ class GlucometerDevice(abc.ABC):
 
     @abc.abstractmethod
     def get_glucose_unit(self) -> common.Unit:
-        """Returns the glucose unit of the device."""
+        # Returns the glucose unit of the device.
         pass
 
     @abc.abstractmethod
@@ -45,15 +45,15 @@ class GlucometerDevice(abc.ABC):
     def set_datetime(
         self, date: Optional[datetime.datetime] = None
     ) -> datetime.datetime:
-        """Sets the date and time of the glucometer.
+        # Sets the date and time of the glucometer.
 
-        Args:
-          date: The value to set the date/time of the glucometer to. If none is
-            given, the current date and time of the computer is used.
+        # Args:
+        #  date: The value to set the date/time of the glucometer to. If none is
+        #    given, the current date and time of the computer is used.
 
-        Returns:
-          A datetime object built according to the returned response.
-        """
+        # Returns:
+        #  A datetime object built according to the returned response.
+
         if not date:
             date = datetime.datetime.now()
         return self._set_device_datetime(date)

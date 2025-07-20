@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2018 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Tests for the common routines."""
+# Tests for the common routines.
 
 # pylint: disable=protected-access,missing-docstring
 

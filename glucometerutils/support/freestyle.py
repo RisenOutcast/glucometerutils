@@ -19,13 +19,12 @@ from glucometerutils import driver, exceptions
 
 
 def convert_ketone_unit(raw_value: float) -> float:
-    """Convert raw ketone value as read in the device to its value in mmol/L.
+    #Convert raw ketone value as read in the device to its value in mmol/L.
 
-    As per https://protocols.glucometers.tech/abbott/freestyle-libre this is
-    actually not using any mg/dL→mmol/L conversion, but rather the same as the
-    meter uses for blood glucose.
+    # As per https://protocols.glucometers.tech/abbott/freestyle-libre this is
+    # actually not using any mg/dL→mmol/L conversion, but rather the same as the
+    # meter uses for blood glucose.
 
-    """
     return raw_value / 18.0
 
 
@@ -33,16 +32,15 @@ ABBOTT_VENDOR_ID = 0x1A61
 
 
 class FreeStyleHidDevice(driver.GlucometerDevice):
-    """Base class implementing the FreeStyle HID common protocol.
+    # Base class implementing the FreeStyle HID common protocol.
 
-    This class implements opening, initializing the connection and sending
-    commands to the device, reading the response and confirming the checksums.
+    # This class implements opening, initializing the connection and sending
+    # commands to the device, reading the response and confirming the checksums.
 
-    Commands sent to the devices over this protocol have a "message type"
-    prefixed to the command itself. Text command are usually sent with message
-    type 0x60, and the replied received with the same. Some devices may diverge
-    though.
-    """
+    # Commands sent to the devices over this protocol have a "message type"
+    # prefixed to the command itself. Text command are usually sent with message
+    # type 0x60, and the replied received with the same. Some devices may diverge
+    # though.
 
     def __init__(
         self,
@@ -68,25 +66,25 @@ class FreeStyleHidDevice(driver.GlucometerDevice):
             raise exceptions.ConnectionFailed(str(e)) from e
 
     def connect(self) -> None:
-        """Open connection to the device, starting the knocking sequence."""
+        # Open connection to the device, starting the knocking sequence.#
         try:
             self._session.connect()
         except Exception as e:
             raise exceptions.ConnectionFailed(str(e))
 
     def disconnect(self) -> None:
-        """Disconnect the device, nothing to be done."""
+        #Disconnect the device, nothing to be done.#
         pass
 
     # Some of the commands are also shared across devices that use this HID
     # protocol, but not many. Only provide here those that do seep to change
     # between them.
     def _get_version(self) -> str:
-        """Return the software version of the device."""
+        # Return the software version of the device.
         return self._session.send_text_command(b"$swver?").rstrip("\r\n")
 
     def get_serial_number(self) -> str:
-        """Returns the serial number of the device."""
+        # Returns the serial number of the device.
         return self._session.send_text_command(b"$serlnum?").rstrip("\r\n")
 
     def get_patient_name(self) -> Optional[str]:
@@ -106,11 +104,11 @@ class FreeStyleHidDevice(driver.GlucometerDevice):
         self._session.send_text_command(b"$ptname," + encoded_name)
 
     def get_datetime(self) -> datetime.datetime:
-        """Gets the date and time as reported by the device.
+        # Gets the date and time as reported by the device.
 
-        This is one of the few commands that appear common to many of the
-        FreeStyle devices that use the HID framing protocol.
-        """
+        # This is one of the few commands that appear common to many of the
+        # FreeStyle devices that use the HID framing protocol.
+
         date = self._session.send_text_command(b"$date?").rstrip("\r\n")
         time = self._session.send_text_command(b"$time?").rstrip("\r\n")
 

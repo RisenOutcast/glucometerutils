@@ -255,5 +255,5 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         self._send_command(_CLEAR_MEMORY)
 
     def get_glucose_unit(self) -> NoReturn:
-        """Maybe this could be implemented by someone who knows the device"""
+        #Maybe this could be implemented by someone who knows the device
         raise NotImplementedError

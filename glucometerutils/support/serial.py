@@ -14,30 +14,28 @@ from glucometerutils import exceptions
 
 
 class SerialDevice:
-    """A Serial-connected glucometer driver base.
+    # A Serial-connected glucometer driver base.
 
-    This class does not implement an actual driver by itself, but provides an
-    easier access to the boilerplate code required for pyserial.
+    # This class does not implement an actual driver by itself, but provides an
+    # easier access to the boilerplate code required for pyserial.
 
-    This helper assumes that communication happens on a standard 8n1
-    configuration, with variable baudrate and no hardware flow control.
+    # This helper assumes that communication happens on a standard 8n1
+    # configuration, with variable baudrate and no hardware flow control.
 
-    The actual drivers should set the following parameters:
+    # The actual drivers should set the following parameters:
 
-      BAUDRATE: (int) the speed the serial port should be opened at.
-      DEFAULT_CABLE_ID: (string) USB Vendor/Product ID pair, in format
-        abcd:abcd, of the default cable for the meter, in case the user
-        didn't pass an explicit device driver.
+    #   BAUDRATE: (int) the speed the serial port should be opened at.
+    #   DEFAULT_CABLE_ID: (string) USB Vendor/Product ID pair, in format
+    #     abcd:abcd, of the default cable for the meter, in case the user
+    #     didn't pass an explicit device driver.
 
-    Optional parameters available:
+    # Optional parameters available:
 
-      TIMEOUT: (float, default: 1) the read timeout in seconds as defined by
-        pyserial.
+    #   TIMEOUT: (float, default: 1) the read timeout in seconds as defined by
+    #     pyserial.
 
-    After initialization, the following attributes can be used by the driver:
-      serial_: (serial.Serial) the open Serial object.
-
-    """
+    # After initialization, the following attributes can be used by the driver:
+    #   serial_: (serial.Serial) the open Serial object.
 
     BAUDRATE: Optional[int] = None
     PARITY: str = serial.PARITY_NONE

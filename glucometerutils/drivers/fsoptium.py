@@ -68,11 +68,10 @@ _MONTH_MATCHES = {
 
 
 def _parse_clock(datestr: str) -> datetime.datetime:
-    """Convert the date/time string used by the device into a datetime.
+    # Convert the date/time string used by the device into a datetime.
 
-    Args:
-      datestr: a string as returned by the device during information handling.
-    """
+    # Args:
+    #   datestr: a string as returned by the device during information handling.
     match = _CLOCK_RE.match(datestr)
     if not match:
         raise exceptions.InvalidResponse(datestr)
@@ -138,11 +137,10 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         raise exceptions.ConnectionFailed()
 
     def get_meter_info(self) -> common.MeterInfo:
-        """Fetch and parses the device information.
+        #Fetch and parses the device information.
 
-        Returns:
-          A common.MeterInfo object.
-        """
+        # Returns:
+        #   A common.MeterInfo object.
         return common.MeterInfo(
             "Freestyle Optium glucometer",
             serial_number=self.get_serial_number(),
@@ -151,36 +149,32 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         )
 
     def get_version(self) -> str:
-        """Returns an identifier of the firmware version of the glucometer.
+        # Returns an identifier of the firmware version of the glucometer.
 
-        Returns:
-          The software version returned by the glucometer, such as "0.22"
-        """
+        # Returns:
+        #   The software version returned by the glucometer, such as "0.22"
         return self.device_version_
 
     def get_serial_number(self) -> str:
-        """Retrieve the serial number of the device.
+        #Retrieve the serial number of the device.
 
-        Returns:
-          A string representing the serial number of the device.
-        """
+        # Returns:
+        #  A string representing the serial number of the device.
         return self.device_serialno_
 
     def get_glucose_unit(self) -> common.Unit:
-        """Returns a constant representing the unit displayed by the meter.
+        # Returns a constant representing the unit displayed by the meter.
 
-        Returns:
-          common.Unit.MG_DL: if the glucometer displays in mg/dL
-          common.Unit.MMOL_L: if the glucometer displays in mmol/L
-        """
+        # Returns:
+        #   common.Unit.MG_DL: if the glucometer displays in mg/dL
+        #   common.Unit.MMOL_L: if the glucometer displays in mmol/L
         return self.device_glucose_unit_
 
     def get_datetime(self) -> datetime.datetime:
-        """Returns the current date and time for the glucometer.
+        # Returns the current date and time for the glucometer.
 
-        Returns:
-          A datetime object built according to the returned response.
-        """
+        # Returns:
+        #   A datetime object built according to the returned response.
         data = self._send_command("colq")
 
         for line in data:
@@ -204,20 +198,19 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         raise NotImplementedError
 
     def get_readings(self) -> Generator[common.AnyReading, None, None]:
-        """Iterates over the reading values stored in the glucometer.
+        # Iterates over the reading values stored in the glucometer.
 
-        Args:
-          unit: The glucose unit to use for the output.
+        # Args:
+        #   unit: The glucose unit to use for the output.
 
-        Yields: A tuple (date, value) of the readings in the glucometer. The
-          value is a floating point in the unit specified; if no unit is
-          specified, the default unit in the glucometer will be used.
+        # Yields: A tuple (date, value) of the readings in the glucometer. The
+        #   value is a floating point in the unit specified; if no unit is
+        #   specified, the default unit in the glucometer will be used.
 
-        Raises:
-          exceptions.InvalidResponse: if the response does not match what '
-          expected.
+        # Raises:
+        #   exceptions.InvalidResponse: if the response does not match what '
+        #   expected.
 
-        """
         data = self._send_command("xmem")
 
         # The first line is empty, the second is the serial number, the third

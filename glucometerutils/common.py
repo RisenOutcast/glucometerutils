@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2013 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Common routines for data in glucometers."""
+# Common routines for data in glucometers.
 
 import datetime
 import enum
@@ -33,16 +33,16 @@ class MeasurementMethod(enum.Enum):
 
 
 def convert_glucose_unit(value: float, from_unit: Unit, to_unit: Unit) -> float:
-    """Convert the given value of glucose level between units.
+    # Convert the given value of glucose level between units.
 
-    Args:
-      value: The value of glucose in the current unit
-      from_unit: The unit value is currently expressed in
-      to_unit: The unit to conver the value to: the other if empty.
+    # Args:
+    #   value: The value of glucose in the current unit
+    #   from_unit: The unit value is currently expressed in
+    #   to_unit: The unit to conver the value to: the other if empty.
+ 
+    # Returns:
+    #   The converted representation of the blood glucose level.
 
-    Returns:
-      The converted representation of the blood glucose level.
-    """
     from_unit = Unit(from_unit)
     to_unit = Unit(to_unit)
 
@@ -68,15 +68,15 @@ class GlucoseReading:
     extra_data: dict[str, Any] = attr.Factory(dict)
 
     def get_value_as(self, to_unit: Unit) -> float:
-        """Returns the reading value as the given unit.
+        # Returns the reading value as the given unit.
+ 
+        # Args:
+        #   to_unit: The unit to return the value to.
 
-        Args:
-          to_unit: The unit to return the value to.
-        """
         return convert_glucose_unit(self.value, Unit.MG_DL, to_unit)
 
     def as_csv(self, unit: Unit) -> str:
-        """Returns the reading as a formatted comma-separated value string."""
+        # Returns the reading as a formatted comma-separated value string.
         return '"%s","%.2f","%s","%s","%s"' % (
             self.timestamp,
             self.get_value_as(unit),
@@ -98,7 +98,7 @@ class KetoneReading:
     extra_data: dict[str, Any] = attr.Factory(dict)
 
     def as_csv(self, unit: Unit) -> str:
-        """Returns the reading as a formatted comma-separated value string."""
+        # Returns the reading as a formatted comma-separated value string.
         del unit  # Unused for Ketone readings.
 
         return '"%s","%.2f","","%s","%s"' % (
@@ -132,16 +132,15 @@ AnyReading = Union[GlucoseReading, KetoneReading, TimeAdjustment]
 
 @attr.s(auto_attribs=True)
 class MeterInfo:
-    """General information about the meter.
-
-    Attributes:
-      model: Human readable model name, chosen by the driver.
-      serial_number: Serial number identified for the reader (or N/A if not
-        available in the protocol.)
-      version_info: List of strings with any version information available about
-        the device. It can include hardware and software version.
-      native_unit: One of the Unit values to identify the meter native unit.
-    """
+    # General information about the meter.
+ 
+    # Attributes:
+    #   model: Human readable model name, chosen by the driver.
+    #   serial_number: Serial number identified for the reader (or N/A if not
+    #     available in the protocol.)
+    #   version_info: List of strings with any version information available about
+    #     the device. It can include hardware and software version.
+    #   native_unit: One of the Unit values to identify the meter native unit.
 
     model: str
     serial_number: str = "N/A"

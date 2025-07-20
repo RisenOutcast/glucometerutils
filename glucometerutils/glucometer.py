@@ -3,7 +3,7 @@
 #
 # SPDX-FileCopyrightText: © 2013 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Utility to manage glucometers' data."""
+# Utility to manage glucometers' data.
 
 import argparse
 import logging

@@ -13,11 +13,10 @@ from glucometerutils import exceptions
 
 
 class HidSession:
-    """An access class to speak to USB HID based devices.
+    # An access class to speak to USB HID based devices.
 
-    This class does not implement a full driver, but rather provide simpler read/write
-    methods abstracting the HID library.
-    """
+    # This class does not implement a full driver, but rather provide simpler read/write
+    # methods abstracting the HID library.
 
     handle_: Optional[BinaryIO]
 
@@ -27,16 +26,15 @@ class HidSession:
         device: Optional[str],
         timeout_ms: int = 0,
     ) -> None:
-        """Construct a new session object.
+        #Construct a new session object.
 
-        Args:
-          usb_id: Optional pair of vendor_id and product_id for the session.
-            This is required to use the hidapi library.
-          device: Optional path to Linux hidraw-style device path. If not provided,
-            usb_id needs to be provided instead.
-          timeout_ms: Timeout in milliseconds for read operations. Only relevant when
-            using hidapi library.
-        """
+        # Args:
+        #  usb_id: Optional pair of vendor_id and product_id for the session.
+        #    This is required to use the hidapi library.
+        #  device: Optional path to Linux hidraw-style device path. If not provided,
+        #    usb_id needs to be provided instead.
+        #  timeout_ms: Timeout in milliseconds for read operations. Only relevant when
+        #    using hidapi library.
 
         self._timeout_ms = timeout_ms
 
@@ -74,7 +72,7 @@ class HidSession:
                 )
 
     def write(self, report: bytes) -> None:
-        """Writes a report to the HID handle."""
+        #Writes a report to the HID handle.#
 
         if self.handle_:
             written = self.handle_.write(report)
@@ -85,11 +83,11 @@ class HidSession:
             raise exceptions.CommandError()
 
     def read(self, size: int = 64) -> bytes:
-        """Read a report from the HID handle.
+        # Read a report from the HID handle.
 
-        This is important as it handles the one incompatible interface between
-        hidraw devices and hidapi handles.
-        """
+        # This is important as it handles the one incompatible interface between
+        # hidraw devices and hidapi handles.
+
         if self.handle_:
             return bytes(self.handle_.read(size))
 

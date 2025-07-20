@@ -28,10 +28,9 @@ from glucometerutils.support import contourusb
 
 
 def _extract_timestamp(parsed_record: dict[str, str]):
-    """Extract the timestamp from a parsed record.
+    # Extract the timestamp from a parsed record.
 
-    This leverages the fact that all the reading records have the same base structure.
-    """
+    # This leverages the fact that all the reading records have the same base structure.
     datetime_str = parsed_record["datetime"]
 
     return datetime.datetime(
@@ -45,7 +44,7 @@ def _extract_timestamp(parsed_record: dict[str, str]):
 
 
 class Device(contourusb.ContourHidDevice):
-    """Glucometer driver for Contour devices."""
+    # Glucometer driver for Contour devices.
 
     def __init__(self, device: Optional[str]) -> None:
         super().__init__((0x1A79, 0x6002), device)
@@ -66,10 +65,8 @@ class Device(contourusb.ContourHidDevice):
             return common.Unit.MMOL_L
 
     def get_readings(self) -> Generator[common.AnyReading, None, None]:
-        """
-        Get reading dump from download data mode(all readings stored)
-        This meter supports only blood samples
-        """
+        # Get reading dump from download data mode(all readings stored)
+        # This meter supports only blood samples
         for parsed_record in self._get_multirecord():
             yield common.GlucoseReading(
                 _extract_timestamp(parsed_record),

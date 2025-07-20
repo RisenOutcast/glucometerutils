@@ -54,17 +54,17 @@ _RESPONSE_MATCH = re.compile(r"^(.+) ([0-9A-F]{4})\r$")
 
 
 def _calculate_checksum(bytestring: bytes) -> int:
-    """Calculate the checksum used by OneTouch Ultra and Ultra2 devices
+    # Calculate the checksum used by OneTouch Ultra and Ultra2 devices
 
-    Args:
-      bytestring: the string of which the checksum has to be calculated.
+    # Args:
+    #  bytestring: the string of which the checksum has to be calculated.
 
-    Returns:
-      A string with the hexdecimal representation of the checksum for the input.
+    # Returns:
+    #  A string with the hexdecimal representation of the checksum for the input.
 
-    The checksum is a very stupid one: it just sums all the bytes,
-    modulo 16-bit, without any parity.
-    """
+    # The checksum is a very stupid one: it just sums all the bytes,
+    # modulo 16-bit, without any parity.
+
     checksum = 0
 
     for byte in bytestring:
@@ -74,14 +74,14 @@ def _calculate_checksum(bytestring: bytes) -> int:
 
 
 def _validate_and_strip_checksum(line: str) -> str:
-    """Verify the simple 16-bit checksum and remove it from the line.
+    #Verify the simple 16-bit checksum and remove it from the line.
 
-    Args:
-      line: the line to check the checksum of.
+    # Args:
+    #  line: the line to check the checksum of.
 
-    Returns:
-      A copy of the line with the checksum stripped out.
-    """
+    # Returns:
+    #  A copy of the line with the checksum stripped out.
+    
     match = _RESPONSE_MATCH.match(line)
 
     if not match:
@@ -107,17 +107,17 @@ _DATETIME_RE = re.compile(
 
 
 def _parse_datetime(response: str) -> datetime.datetime:
-    """Convert a response with date and time from the meter into a datetime.
+    # Convert a response with date and time from the meter into a datetime.
 
-    Args:
-      response: the response coming from a DMF or DMT command
+    # Args:
+    #  response: the response coming from a DMF or DMT command
 
-    Returns:
-      A datetime object built according to the returned response.
+    # Returns:
+    #  A datetime object built according to the returned response.
 
-    Raises:
-      InvalidResponse if the string cannot be matched by _DATETIME_RE.
-    """
+    # Raises:
+    #  InvalidResponse if the string cannot be matched by _DATETIME_RE.
+    
     match = _DATETIME_RE.match(response)
     if not match:
         raise exceptions.InvalidResponse(response)
@@ -141,36 +141,33 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         return
 
     def _send_command(self, cmd: str) -> None:
-        """Send command interface.
+        # Send command interface.
 
-        Args:
-          cmd: command and parameters to send (without newline)
-        """
+        # Args:
+        #  cmd: command and parameters to send (without newline)
         cmdstring = bytes(f"\x11\r{cmd}\r", "ascii")
         self.serial_.write(cmdstring)
         self.serial_.flush()
 
     def _send_oneliner_command(self, cmd: str) -> str:
-        """Send command and read a one-line response.
+        # Send command and read a one-line response.
 
-        Args:
-          cmd: command and parameters to send (without newline)
+        # Args:
+        #   cmd: command and parameters to send (without newline)
 
-        Returns:
-          A single line of text that the glucometer responds, without the
-          checksum.
-        """
+        # Returns:
+        #   A single line of text that the glucometer responds, without the
+        #   checksum.
         self._send_command(cmd)
 
         line = self.serial_.readline().decode("ascii")
         return _validate_and_strip_checksum(line)
 
     def get_meter_info(self) -> common.MeterInfo:
-        """Fetch and parses the device information.
+        # Fetch and parses the device information.
 
-        Returns:
-          A common.MeterInfo object.
-        """
+        # Returns:
+        #  A common.MeterInfo object.
         return common.MeterInfo(
             "OneTouch Ultra 2 glucometer",
             serial_number=self.get_serial_number(),
@@ -179,12 +176,11 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         )
 
     def get_version(self) -> str:
-        """Returns an identifier of the firmware version of the glucometer.
+        # Returns an identifier of the firmware version of the glucometer.
 
-        Returns:
-          The software version returned by the glucometer, such as
-            "P02.00.00 30/08/06".
-        """
+        # Returns:
+        #  The software version returned by the glucometer, such as
+        #    "P02.00.00 30/08/06".
         response = self._send_oneliner_command("DM?")
 
         if response[0] != "?":
@@ -195,17 +191,16 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
     _SERIAL_NUMBER_RE = re.compile('^@ "([A-Z0-9]{9})"$')
 
     def get_serial_number(self) -> str:
-        """Retrieve the serial number of the device.
+        # Retrieve the serial number of the device.
 
-        Returns:
-          A string representing the serial number of the device.
+        # Returns:
+        #   A string representing the serial number of the device.
 
-        Raises:
-          exceptions.InvalidResponse: if the DM@ command returns a string not
-            matching _SERIAL_NUMBER_RE.
-          InvalidSerialNumber: if the returned serial number does not match
-            the OneTouch2 device as per specs.
-        """
+        #Raises:
+        #  exceptions.InvalidResponse: if the DM@ command returns a string not
+        #    matching _SERIAL_NUMBER_RE.
+        #  InvalidSerialNumber: if the returned serial number does not match
+        #    the OneTouch2 device as per specs.
         response = self._send_oneliner_command("DM@")
 
         match = self._SERIAL_NUMBER_RE.match(response)
@@ -222,11 +217,10 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         return serial_number
 
     def get_datetime(self) -> datetime.datetime:
-        """Returns the current date and time for the glucometer.
+        # Returns the current date and time for the glucometer.
 
-        Returns:
-          A datetime object built according to the returned response.
-        """
+        # Returns:
+        #   A datetime object built according to the returned response.
         response = self._send_oneliner_command("DMF")
         return _parse_datetime(response[2:])
 
@@ -237,11 +231,10 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         return _parse_datetime(response[2:])
 
     def zero_log(self) -> None:
-        """Zeros out the data log of the device.
+        #Zeros out the data log of the device.
 
-        This function will clear the memory of the device deleting all the
-        readings in an irrecoverable way.
-        """
+        # This function will clear the memory of the device deleting all the
+        # readings in an irrecoverable way.
         response = self._send_oneliner_command("DMZ")
         if response != "Z":
             raise exceptions.InvalidResponse(response)
@@ -249,20 +242,19 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
     _GLUCOSE_UNIT_RE = re.compile(r'^SU\?,"(MG/DL |MMOL/L)"')
 
     def get_glucose_unit(self) -> common.Unit:
-        """Returns a constant representing the unit displayed by the meter.
+        # Returns a constant representing the unit displayed by the meter.
 
-        Returns:
-          common.Unit.MG_DL: if the glucometer displays in mg/dL
-          common.Unit.MMOL_L: if the glucometer displays in mmol/L
+        # Returns:
+        #   common.Unit.MG_DL: if the glucometer displays in mg/dL
+        #   common.Unit.MMOL_L: if the glucometer displays in mmol/L
 
-        Raises:
-          exceptions.InvalidGlucoseUnit: if the unit is not recognized
+        # Raises:
+        #   exceptions.InvalidGlucoseUnit: if the unit is not recognized
 
-        OneTouch meters will always dump data in mg/dL because that's their
-        internal storage. They will then provide a separate method to read the
-        unit used for display. This is not settable by the user in all modern
-        meters.
-        """
+        # OneTouch meters will always dump data in mg/dL because that's their
+        # internal storage. They will then provide a separate method to read the
+        # unit used for display. This is not settable by the user in all modern
+        # meters.
         response = self._send_oneliner_command("DMSU?")
 
         match = self._GLUCOSE_UNIT_RE.match(response)
@@ -280,19 +272,17 @@ class Device(serial.SerialDevice, driver.GlucometerDevice):
         raise exceptions.InvalidGlucoseUnit(response)
 
     def get_readings(self) -> Generator[common.AnyReading, None, None]:
-        """Iterates over the reading values stored in the glucometer.
+        # Iterates over the reading values stored in the glucometer.
 
-        Args:
-          unit: The glucose unit to use for the output.
+        # Args:
+        #   unit: The glucose unit to use for the output.
 
-        Yields:
-          A GlucoseReading object representing the read value.
+        # Yields:
+        #   A GlucoseReading object representing the read value.
 
-        Raises:
-          exceptions.InvalidResponse: if the response does not match what
-          expected.
-
-        """
+        # Raises:
+        #   exceptions.InvalidResponse: if the response does not match what
+        #   expected.
         self._send_command("DMP")
         data = self.serial_.readlines()
 

@@ -70,7 +70,7 @@ _ARRESULT_RAPID_INSULIN_ENTRY_MAP = ((43, "double-rapid-acting-insulin"),)
 def _parse_record(
     record: Sequence[str], entry_map: Sequence[tuple[int, str]]
 ) -> dict[str, int]:
-    """Parses a list of string fields into a dictionary of integers."""
+    # Parses a list of string fields into a dictionary of integers.
 
     if not record:
         return {}
@@ -84,10 +84,9 @@ def _parse_record(
 def _extract_timestamp(
     parsed_record: Mapping[str, int], prefix: str = ""
 ) -> datetime.datetime:
-    """Extract the timestamp from a parsed record.
+    # Extract the timestamp from a parsed record.
 
-    This leverages the fact that all the records have the same base structure.
-    """
+    # This leverages the fact that all the records have the same base structure.
 
     return datetime.datetime(
         parsed_record[prefix + "year"] + 2000,
@@ -100,7 +99,7 @@ def _extract_timestamp(
 
 
 def _parse_arresult(record: Sequence[str]) -> Optional[common.AnyReading]:
-    """Takes an array of string fields as input and parses it into a Reading."""
+    # Takes an array of string fields as input and parses it into a Reading.
 
     parsed_record = _parse_record(record, _BASE_ENTRY_MAP)
 
@@ -199,12 +198,12 @@ def _parse_arresult(record: Sequence[str]) -> Optional[common.AnyReading]:
 
 
 class LibreDevice(freestyle.FreeStyleHidDevice):
-    """Glucometer driver for FreeStyle Libre devices."""
+    # Glucometer driver for FreeStyle Libre devices.
 
     _MODEL_NAME: str
 
     def get_meter_info(self) -> common.MeterInfo:
-        """Return the device information in structured form."""
+        # Return the device information in structured form.
         return common.MeterInfo(
             self._MODEL_NAME,
             serial_number=self.get_serial_number(),
@@ -214,11 +213,11 @@ class LibreDevice(freestyle.FreeStyleHidDevice):
         )
 
     def get_serial_number(self) -> str:
-        """Overridden function as the command is not compatible."""
+        # Overridden function as the command is not compatible.
         return self._session.send_text_command(b"$sn?").rstrip("\r\n")
 
     def get_glucose_unit(self) -> common.Unit:  # pylint: disable=no-self-use
-        """Returns the glucose unit of the device."""
+        # Returns the glucose unit of the device. 
         uom = self._session.send_text_command(b"$uom?").rstrip("\r\n")
         if uom == "0":
             return common.Unit.MMOL_L
@@ -228,8 +227,7 @@ class LibreDevice(freestyle.FreeStyleHidDevice):
         raise exceptions.InvalidGlucoseUnit(uom)
 
     def get_readings(self) -> Generator[common.AnyReading, None, None]:
-        # First of all get the usually longer list of sensor readings, and
-        # convert them to Readings objects.
+        # First of all get the usually longer list of sensor readings, and convert them to Readings objects.
         for record in self._session.query_multirecord(b"$history?"):
             parsed_record = _parse_record(record, _HISTORY_ENTRY_MAP)
 
@@ -245,8 +243,7 @@ class LibreDevice(freestyle.FreeStyleHidDevice):
                 extra_data={"device_id": parsed_record["device_id"]},
             )
 
-        # Then get the results of explicit scans and blood tests (and other
-        # events).
+        # Then get the results of explicit scans and blood tests (and other events).
         for record in self._session.query_multirecord(b"$arresult?"):
             logging.debug(f"Retrieved arresult: {record!r}")
             reading = _parse_arresult(record)

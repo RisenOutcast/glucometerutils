@@ -64,7 +64,7 @@ class FrameError(Exception):
 
 @enum.unique
 class Mode(enum.Enum):
-    """Operation modes."""
+    #Operation modes.#
 
     ESTABLISH = enum.auto()
     DATA = enum.auto()
@@ -73,7 +73,7 @@ class Mode(enum.Enum):
 
 
 class ContourHidDevice(driver.GlucometerDevice):
-    """Base class implementing the ContourUSB HID common protocol."""
+    #Base class implementing the ContourUSB HID common protocol.
 
     blocksize = 64
 
@@ -164,18 +164,16 @@ class ContourHidDevice(driver.GlucometerDevice):
         self.datetime = header.group("datetime")
 
     def checksum(self, text):
-        """
-        Implemented by Anders Hammarquist for glucodump project
-        More info: https://bitbucket.org/iko/glucodump/src/default/
-        """
+        # Implemented by Anders Hammarquist for glucodump project
+        # More info: https://bitbucket.org/iko/glucodump/src/default/
+        
         checksum = hex(sum(ord(c) for c in text) % 256).upper().split("X")[1]
         return ("00" + checksum)[-2:]
 
     def checkframe(self, frame) -> Optional[str]:
-        """
-        Implemented by Anders Hammarquist for glucodump project
-        More info: https://bitbucket.org/iko/glucodump/src/default/
-        """
+        # Implemented by Anders Hammarquist for glucodump project
+        # More info: https://bitbucket.org/iko/glucodump/src/default/
+        
         match = _RECORD_FORMAT.match(frame)
         if not match:
             raise FrameError("Couldn't parse frame", frame)
@@ -204,9 +202,8 @@ class ContourHidDevice(driver.GlucometerDevice):
         return match.group("text")
 
     def connect(self):
-        """Connecting the device, nothing to be done.
-        All process is hadled by hiddevice
-        """
+        # Connecting the device, nothing to be done.
+        # All process is hadled by hiddevice
         pass
 
     def _get_info_record(self):
@@ -236,22 +233,22 @@ class ContourHidDevice(driver.GlucometerDevice):
             raise e
 
     def disconnect(self):
-        """Disconnect the device, nothing to be done."""
+        #Disconnect the device, nothing to be done.#
         pass
 
     # Some of the commands are also shared across devices that use this HID
     # protocol, but not many. Only provide here those that do seep to change
     # between them.
     def _get_version(self) -> str:
-        """Return the software version of the device."""
+        #Return the software version of the device.
         return self.dig_ver + " - " + self.anlg_ver + " - " + self.agp_ver
 
     def _get_serial_number(self) -> str:
-        """Returns the serial number of the device."""
+        #Returns the serial number of the device.
         return self.serial_num
 
     def _get_glucose_unit(self) -> str:
-        """Return 0 for mg/dL, 1 for mmol/L"""
+        #Return 0 for mg/dL, 1 for mmol/L
         return self.unit
 
     def get_datetime(self) -> datetime.datetime:
@@ -266,11 +263,9 @@ class ContourHidDevice(driver.GlucometerDevice):
         )
 
     def sync(self) -> Generator[str, None, None]:
-        """
-        Sync with meter and yield received data frames
-        FSM implemented by Anders Hammarquist's for glucodump
-        More info: https://bitbucket.org/iko/glucodump/src/default/
-        """
+        # Sync with meter and yield received data frames
+        # FSM implemented by Anders Hammarquist's for glucodump
+        # More info: https://bitbucket.org/iko/glucodump/src/default/
         self.state = Mode.ESTABLISH
         try:
             tometer = "\x04"
@@ -323,12 +318,11 @@ class ContourHidDevice(driver.GlucometerDevice):
         return rec_text
 
     def _get_multirecord(self) -> list[dict[str, str]]:
-        """Queries for, and returns, "multirecords" results.
-
-        Returns:
-          (csv.reader): a CSV reader object that returns a record for each line
-             in the record file.
-        """
+        # Queries for, and returns, "multirecords" results.
+        
+        # Returns:
+        #   (csv.reader): a CSV reader object that returns a record for each line
+        #      in the record file.
         records_arr = []
         for rec in self.sync():
             if rec[0] == "R":

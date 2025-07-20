@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""Tests for the common ContourUSB functions.."""
+# Tests for the common ContourUSB functions..
 
 # pylint: disable=protected-access,missing-docstring
 

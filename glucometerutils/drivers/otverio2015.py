@@ -145,24 +145,23 @@ class Device(driver.GlucometerDevice):
         request_obj: Optional[dict[str, Any]],
         response_format: construct.Struct,
     ) -> construct.Container:
-        """Send a request to the meter, and read its response.
+        #Send a request to the meter, and read its response.
 
-        Args:
-          lba: the address of the block register to use, known
-            valid addresses are 3, 4 and 5.
-          request_format: a construct format identifier of the request to send
-          request_obj: the object to format with the provided identifier
-          response_format: a construct format identifier to parse the returned
-            message with.
+        # Args:
+        #  lba: the address of the block register to use, known
+        #    valid addresses are 3, 4 and 5.
+        #  request_format: a construct format identifier of the request to send
+        #  request_obj: the object to format with the provided identifier
+        #  response_format: a construct format identifier to parse the returned
+        #    message with.
 
-        Returns:
-          The Container object parsed from the response received by the meter.
+        #Returns:
+        #  The Container object parsed from the response received by the meter.
 
-        Raises:
-          lifescan.MalformedCommand if Construct fails to build the request or
-            parse the response.
+        #Raises:
+        #  lifescan.MalformedCommand if Construct fails to build the request or
+        #    parse the response.
 
-        """
         try:
             request = request_format.build(request_obj)
             request_raw = _PACKET.build({"data": {"value": {"message": request}}})
