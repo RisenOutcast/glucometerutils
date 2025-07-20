@@ -129,7 +129,7 @@ def main():
             # Also catch any leftover ValueErrors.
             except (NotImplementedError, ValueError):
                 time_str = "N/A"
-            print(f"{device_info}Time: {time_str}")
+            print(f"{device_info},{time_str}")
         elif args.action == "dump":
             unit = args.unit
             if unit is None:

@@ -77,7 +77,7 @@ class GlucoseReading:
 
     def as_csv(self, unit: Unit) -> str:
         # Returns the reading as a formatted comma-separated value string.
-        return '"%s","%.2f","%s","%s","%s"' % (
+        return '%s,%.2f,%s,%s,%s' % (
             self.timestamp,
             self.get_value_as(unit),
             self.meal.value,
@@ -136,10 +136,8 @@ class MeterInfo:
  
     # Attributes:
     #   model: Human readable model name, chosen by the driver.
-    #   serial_number: Serial number identified for the reader (or N/A if not
-    #     available in the protocol.)
-    #   version_info: List of strings with any version information available about
-    #     the device. It can include hardware and software version.
+    #   serial_number: Serial number identified for the reader (or N/A if not available in the protocol.)
+    #   version_info: List of strings with any version information available about the device. It can include hardware and software version.
     #   native_unit: One of the Unit values to identify the meter native unit.
 
     model: str
@@ -155,17 +153,6 @@ class MeterInfo:
                 self.version_info
             ).strip()
 
-        base_output = textwrap.dedent(
-            f"""\
-            {self.model}
-            Serial Number: {self.serial_number}
-            Version Information:
-                {version_information_string}
-            Native Unit: {self.native_unit.value}
-        """
-        )
-
-        if self.patient_name is not None:
-            base_output += f"Patient Name: {self.patient_name}\n"
+        base_output = f"{self.model},{self.serial_number},{version_information_string},{self.native_unit.value},{self.patient_name}"
 
         return base_output
