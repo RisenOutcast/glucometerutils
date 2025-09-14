@@ -207,7 +207,7 @@ class LibreDevice(freestyle.FreeStyleHidDevice):
         return common.MeterInfo(
             self._MODEL_NAME,
             serial_number=self.get_serial_number(),
-            version_info=("Software version: " + self._get_version(),),
+            version_info=(self._get_version(),),
             native_unit=self.get_glucose_unit(),
             patient_name=self.get_patient_name(),
         )
