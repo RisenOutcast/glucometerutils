@@ -2,20 +2,19 @@
 #
 # SPDX-FileCopyrightText: © 2021 Stefanie Tellex
 # SPDX-License-Identifier: MIT
-"""Driver for FreeStyle Freedom Lite devices.
+# Driver for FreeStyle Freedom Lite devices.
 
-Supported features:
-    - get readings
-    - assumes the device uses mg/dL for the glucose unit
-    - get date and time;
-    - get serial number and software version.
+# Supported features:
+#    - get readings
+#    - assumes the device uses mg/dL for the glucose unit
+#    - get date and time;
+#    - get serial number and software version.
 
-Expected device path: /dev/ttyUSB0 or similar serial port device.
+# Expected device path: /dev/ttyUSB0 or similar serial port device.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
 
-https://protocols.glucometers.tech/abbott/freestyle-lite.html
-"""
+# https://protocols.glucometers.tech/abbott/freestyle-lite.html
 
 import datetime
 import logging

@@ -2,23 +2,20 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for FreeStyle Libre devices.
+# Driver for FreeStyle Libre devices.
 
-Supported features:
-    - get readings (sensor, flash and blood glucose), including comments;
-    - get and set date and time;
-    - get serial number and software version;
-    - get and set patient name;
-    - memory reset (caution!)
+# Supported features:
+#    - get readings (sensor, flash and blood glucose), including comments;
+#    - get and set date and time;
+#    - get serial number and software version;
+#    - get and set patient name;
+#    - memory reset (caution!)
 
-Expected device path: /dev/hidraw9 or similar HID device. Optional when using
-HIDAPI.
+# Expected device path: /dev/hidraw9 or similar HID device. Optional when using HIDAPI.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
+# https://protocols.glucometers.tech/abbott/freestyle-libre
 
-https://protocols.glucometers.tech/abbott/freestyle-libre
-
-"""
 
 from typing import Optional
 

@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2018 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Extra classes for Construct."""
+# Extra classes for Construct.
 
 import datetime
 

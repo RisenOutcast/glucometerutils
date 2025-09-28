@@ -2,8 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Common routines and base driver class for HID-based meters.
-"""
+# Common routines and base driver class for HID-based meters.
 
 import logging
 import os

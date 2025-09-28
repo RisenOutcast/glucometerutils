@@ -2,8 +2,8 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Common routines and base driver class for serial-based meters.
-"""
+# Common routines and base driver class for serial-based meters.
+
 
 import logging
 from typing import Optional

@@ -2,22 +2,19 @@
 #
 # SPDX-FileCopyrightText: © 2019 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for ContourUSB devices.
+# Driver for ContourUSB devices.
 
-Supported features:
-    - get readings (blood glucose), including comments;
-    - get date and time;
-    - get serial number and software version;
-    - get device info (e.g. unit)
+# Supported features:
+#    - get readings (blood glucose), including comments;
+#    - get date and time;
+#    - get serial number and software version;
+#    - get device info (e.g. unit)
 
-Expected device path: /dev/hidraw4 or similar HID device. Optional when using
-HIDAPI.
+# Expected device path: /dev/hidraw4 or similar HID device. Optional when using HIDAPI.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
 
-http://protocols.ascensia.com/Programming-Guide.aspx
-
-"""
+# http://protocols.ascensia.com/Programming-Guide.aspx
 
 import datetime
 from collections.abc import Generator

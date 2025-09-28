@@ -2,20 +2,20 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for FreeStyle Optium devices.
+# Driver for FreeStyle Optium devices.
 
-Supported features:
-    - get readings (ignores ketone results);
-    - use the glucose unit preset on the device by default;
-    - get and set date and time;
-    - get serial number and software version.
+# Supported features:
+#    - get readings (ignores ketone results);
+#    - use the glucose unit preset on the device by default;
+#    - get and set date and time;
+#    - get serial number and software version.
 
-Expected device path: /dev/ttyUSB0 or similar serial port device.
+# Expected device path: /dev/ttyUSB0 or similar serial port device.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
 
-https://protocols.glucometers.tech/abbott/freestyle-optium
-"""
+# https://protocols.glucometers.tech/abbott/freestyle-optium
+
 
 import datetime
 import logging

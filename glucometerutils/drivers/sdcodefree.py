@@ -2,19 +2,17 @@
 #
 # SPDX-FileCopyrightText: © 2016 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for SD CodeFree devices by SD Biosensor.
+# Driver for SD CodeFree devices by SD Biosensor.
 
-For SD Biosensor glucometers using the serial interface.
+# For SD Biosensor glucometers using the serial interface.
 
-Supported features:
-    - get readings, including pre-/post-meal notes;
-    - set date and time.
+# Supported features:
+#    - get readings, including pre-/post-meal notes;
+#    - set date and time.
 
-Expected device path: /dev/ttyUSB0 or similar serial port device.
+# Expected device path: /dev/ttyUSB0 or similar serial port device.
 
-IMPORTANT NOTE: the glucometer can be connected before starting the program, but
-it has to be turned on when the program asks you to.
-"""
+# IMPORTANT NOTE: the glucometer can be connected before starting the program, but it has to be turned on when the program asks you to.
 
 import binascii
 import datetime

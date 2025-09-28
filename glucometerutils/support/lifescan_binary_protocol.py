@@ -2,13 +2,11 @@
 #
 # SPDX-FileCopyrightText: © 2018 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Support module for the LifeScan binary protocol.
+# Support module for the LifeScan binary protocol.
 
-A number of LifeScan devices use a semi-compatible binary protocol to talk host
-and device, which is (vastly) compatible.
+# A number of LifeScan devices use a semi-compatible binary protocol to talk host and device, which is (vastly) compatible.
 
-This module implements an interface to send and receive these messages.
-"""
+# This module implements an interface to send and receive these messages.
 
 import construct
 

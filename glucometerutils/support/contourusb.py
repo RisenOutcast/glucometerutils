@@ -2,15 +2,13 @@
 #
 # SPDX-FileCopyrightText: © 2019 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Common routines to implement the ContourUSB common protocol.
+# Common routines to implement the ContourUSB common protocol.
 
-Protocol documentation available from Ascensia at
-http://protocols.ascensia.com/Programming-Guide.aspx
+# Protocol documentation available from Ascensia at
+# http://protocols.ascensia.com/Programming-Guide.aspx
 
-* glucodump code segments are developed by Anders Hammarquist
-* Rest of code is developed by Arvanitis Christos
-
-"""
+# * glucodump code segments are developed by Anders Hammarquist
+# * Rest of code is developed by Arvanitis Christos
 
 import datetime
 import enum

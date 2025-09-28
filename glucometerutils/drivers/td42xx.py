@@ -2,16 +2,15 @@
 #
 # SPDX-FileCopyrightText: © 2019 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for TaiDoc TD-42xx devices.
+# Driver for TaiDoc TD-42xx devices.
 
-Supported features:
-    - get readings, including pre-/post-meal notes;
-    - get and set date and time;
-    - get serial number (partial);
-    - memory reset (caution!)
+# Supported features:
+#    - get readings, including pre-/post-meal notes;
+#    - get and set date and time;
+#    - get serial number (partial);
+#    - memory reset (caution!)
 
-Expected device path: 0001:001c:00 (libusb), /dev/hidraw1 (Linux).
-"""
+# Expected device path: 0001:001c:00 (libusb), /dev/hidraw1 (Linux).
 
 import binascii
 import datetime

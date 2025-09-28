@@ -2,13 +2,12 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Base driver for FreeStyle Libre devices.
+# Base driver for FreeStyle Libre devices.
 
-This module provides the common driver functionality supported for Libre and Libre2.
+# This module provides the common driver functionality supported for Libre and Libre2.
 
-Protocol documentation available at
-https://protocols.glucometers.tech/abbott/freestyle-libre
-"""
+# Protocol documentation available at
+# https://protocols.glucometers.tech/abbott/freestyle-libre
 
 import datetime
 import logging

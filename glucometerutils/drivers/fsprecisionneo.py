@@ -2,25 +2,21 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for FreeStyle Precision Neo devices.
+# Driver for FreeStyle Precision Neo devices.
 
-This driver may also work with FreeStyle Optium Neo devices, but it is currently
-untested.
+# This driver may also work with FreeStyle Optium Neo devices, but it is currently untested.
 
-Supported features:
-    - get readings;
-    - get and set date and time;
-    - get serial number and software version;
-    - get and set patient name.
+# Supported features:
+#    - get readings;
+#    - get and set date and time;
+#    - get serial number and software version;
+#    - get and set patient name.
 
-Expected device path: /dev/hidraw9 or similar HID device. Optional when using
-HIDAPI.
+# Expected device path: /dev/hidraw9 or similar HID device. Optional when using HIDAPI.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
 
-https://protocols.glucometers.tech/abbott/freestyle-precision-neo
-
-"""
+# https://protocols.glucometers.tech/abbott/freestyle-precision-neo
 
 import dataclasses
 import datetime

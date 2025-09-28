@@ -2,26 +2,24 @@
 #
 # SPDX-FileCopyrightText: © 2016 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for LifeScan OneTouch Verio (2015) and Select Plus devices.
+# Driver for LifeScan OneTouch Verio (2015) and Select Plus devices.
 
-Verio 2015 devices can be recognized by microUSB connectors.
+# Verio 2015 devices can be recognized by microUSB connectors.
 
-Supported features:
-    - get readings, including pre-/post-meal notes †;
-    - use the glucose unit preset on the device by default;
-    - get and set date and time;
-    - get serial number and software version;
-    - memory reset (caution!)
+# Supported features:
+#    - get readings, including pre-/post-meal notes †;
+#    - use the glucose unit preset on the device by default;
+#    - get and set date and time;
+#    - get serial number and software version;
+#    - memory reset (caution!)
 
-Expected device path: /dev/sdb or similar USB block device.
+# Expected device path: /dev/sdb or similar USB block device.
 
-† Pre-/post-meal notes are only supported on Select Plus devices.
+# † Pre-/post-meal notes are only supported on Select Plus devices.
 
-Further information on the device protocol can be found at
+# Further information on the device protocol can be found at
+# https://protocols.glucometers.tech/lifescan/onetouch-verio-2015
 
-https://protocols.glucometers.tech/lifescan/onetouch-verio-2015
-
-"""
 
 import binascii
 import datetime

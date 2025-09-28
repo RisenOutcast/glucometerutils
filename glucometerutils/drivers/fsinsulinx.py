@@ -2,20 +2,17 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for FreeStyle InsuLinx devices.
+# Driver for FreeStyle InsuLinx devices.
 
-Supported features:
-    - get readings;
-    - get and set date and time;
-    - get serial number and software version.
+# Supported features:
+#    - get readings;
+#    - get and set date and time;
+#    - get serial number and software version.
 
-Expected device path: /dev/hidraw9 or similar HID device. Optional when using
-HIDAPI.
+# Expected device path: /dev/hidraw9 or similar HID device. Optional when using HIDAPI.
 
-WARNING: currently untested! Based off reverse engineering notes provided by
-Xavier Claessens.
-
-"""
+# WARNING: currently untested! Based off reverse engineering notes provided by
+# Xavier Claessens.
 
 import collections
 import datetime

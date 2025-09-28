@@ -1,14 +1,14 @@
 # SPDX-FileCopyrightText: © 2021 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
 
-"""Driver for GlucoMen Areo devices.
+# Driver for GlucoMen Areo devices.
 
-Supported features:
-    - get readings, including pre-/post-meal notes and comments;
-    - set date and time.
+# Supported features:
+#    - get readings, including pre-/post-meal notes and comments;
+#    - set date and time.
 
-Expected device path: /dev/ttyUSB0 or similar serial port device.
-"""
+# Expected device path: /dev/ttyUSB0 or similar serial port device.
+
 
 import dataclasses
 import datetime

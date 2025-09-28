@@ -2,12 +2,10 @@
 #
 # SPDX-FileCopyrightText: © 2017 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Common routines to implement the FreeStyle common protocol.
+# Common routines to implement the FreeStyle common protocol.
 
-Protocol documentation available at
-https://protocols.glucometers.tech/abbott/shared-hid-protocol
-
-"""
+# Protocol documentation available at
+# https://protocols.glucometers.tech/abbott/shared-hid-protocol
 
 import datetime
 import pathlib

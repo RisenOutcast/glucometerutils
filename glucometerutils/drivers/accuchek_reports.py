@@ -2,18 +2,16 @@
 #
 # SPDX-FileCopyrightText: © 2016 The glucometerutils Authors
 # SPDX-License-Identifier: MIT
-"""Driver for Accu-Chek Mobile devices with reports mode.
+# Driver for Accu-Chek Mobile devices with reports mode.
 
-Supported features:
-    - get readings, including comments;
-    - use the glucose unit preset on the device by default;
-    - get serial number.
+# Supported features:
+#    - get readings, including comments;
+#    - use the glucose unit preset on the device by default;
+#    - get serial number.
 
-Expected device path: /mnt/ACCUCHEK, the mountpoint of the block device.
+# Expected device path: /mnt/ACCUCHEK, the mountpoint of the block device.
 
-The Accu-Chek Mobile meters should be set to "Reports" mode.
-
-"""
+# The Accu-Chek Mobile meters should be set to "Reports" mode.
 
 import csv
 import datetime
