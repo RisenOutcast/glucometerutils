@@ -8,13 +8,39 @@
 import argparse
 import logging
 import sys
-
-from glucometerutils import common, driver, exceptions
-
+import os, json, logging
+from pathlib import Path
+from config import FOLDERS
 
 def main():
+    def get_logs_dir():
+        my_documents = Path.home() / "Documents"
+
+        folder_path = my_documents.joinpath(*FOLDERS)
+        logs_dir = folder_path / "Logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        return logs_dir
+
+    def configure_logging():
+        logs_dir = get_logs_dir()
+        log_path = logs_dir / "glucometer_log.txt"
+
+        logging.basicConfig(
+            filename=str(log_path),
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+        )
+
+    configure_logging()
+
     if sys.version_info < (3, 7):
         raise Exception("Unsupported Python version, please use at least Python 3.7")
+    
+    try:
+        from glucometerutils import common, driver, exceptions
+    except Exception:
+        logging.exception("Failed to import glucometerutils submodules")
+        return 1
 
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="action")
@@ -96,8 +122,6 @@ def main():
 
     args = parser.parse_args()
 
-    logging.basicConfig(level=args.vlog)
-
     try:
         requested_driver = driver.load_driver(args.driver)
     except ImportError as e:
@@ -130,12 +154,14 @@ def main():
             except (NotImplementedError, ValueError):
                 time_str = "N/A"
             print(f"{device_info},{time_str}")
+            logging.info("Info called. Info: " + f"{device_info},{time_str}")
         elif args.action == "dump":
             unit = args.unit
             if unit is None:
                 unit = device_info.native_unit
 
             readings = device.get_readings()
+            readings_count = 0
 
             if not args.with_ketone:
                 readings = (
@@ -146,6 +172,9 @@ def main():
 
             for reading in sorted(readings, key=lambda r: r.timestamp):
                 print(reading.as_csv(unit))
+                readings_count +=1
+                
+            logging.info("Dumped %d readings from device.", readings_count)
         elif args.action == "datetime":
             if args.set == "now":
                 print(device.set_datetime())

@@ -14,3 +14,5 @@ __pycache__/
 build
 .idea/
 *venv/
+log.txt
+config.py
