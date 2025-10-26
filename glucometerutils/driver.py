@@ -74,12 +74,8 @@ class GlucometerDevice(abc.ABC):
 @dataclasses.dataclass
 class Driver:
     device: type[GlucometerDevice]
-    help: str
 
 
 def load_driver(driver_name: str) -> Driver:
     driver_module = importlib.import_module(f"glucometerutils.drivers.{driver_name}")
-    help_string = inspect.getdoc(driver_module)
-    assert help_string is not None
-
-    return Driver(getattr(driver_module, "Device"), help_string)
+    return Driver(getattr(driver_module, "Device"))
