@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-FileCopyrightText: © 2013 The glucometerutils Authors
+# SPDX-FileCopyrightText: © 2025 RisenOutcast
 # SPDX-License-Identifier: MIT
 # Common routines for data in glucometers.
 
+from dataclasses import dataclass, field
 import datetime
 import enum
-import textwrap
-from collections.abc import Sequence
-from typing import Any, Optional, Union
-
-import attr
-
+from typing import Any, Optional, Union, Sequence
 
 class Unit(enum.Enum):
     MG_DL = "mg/dL"
@@ -30,7 +27,6 @@ class MeasurementMethod(enum.Enum):
     BLOOD_SAMPLE = "blood sample"
     CGM = "CGM"  # Continuous Glucose Monitoring
     TIME = "time"
-
 
 def convert_glucose_unit(value: float, from_unit: Unit, to_unit: Unit) -> float:
     # Convert the given value of glucose level between units.
@@ -54,18 +50,20 @@ def convert_glucose_unit(value: float, from_unit: Unit, to_unit: Unit) -> float:
 
     return round(value * 18.0, 1)
 
-
-@attr.s(auto_attribs=True)
+@dataclass
 class GlucoseReading:
     timestamp: datetime.datetime
     value: float
-    meal: Meal = attr.ib(default=Meal.NONE, validator=attr.validators.in_(Meal))
+    meal: Meal = Meal.NONE
     comment: str = ""
-    measure_method: MeasurementMethod = attr.ib(
-        default=MeasurementMethod.BLOOD_SAMPLE,
-        validator=attr.validators.in_(MeasurementMethod),
-    )
-    extra_data: dict[str, Any] = attr.Factory(dict)
+    measure_method: MeasurementMethod = MeasurementMethod.BLOOD_SAMPLE
+    extra_data: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not isinstance(self.meal, Meal):
+            self.meal = Meal(self.meal)
+        if not isinstance(self.measure_method, MeasurementMethod):
+            self.measure_method = MeasurementMethod(self.measure_method)
 
     def get_value_as(self, to_unit: Unit) -> float:
         # Returns the reading value as the given unit.
@@ -85,17 +83,17 @@ class GlucoseReading:
             self.comment,
         )
 
-
-@attr.s(auto_attribs=True)
+@dataclass
 class KetoneReading:
     timestamp: datetime.datetime
     value: float
     comment: str = ""
-    measure_method: MeasurementMethod = attr.ib(
-        default=MeasurementMethod.BLOOD_SAMPLE,
-        validator=attr.validators.in_({MeasurementMethod.BLOOD_SAMPLE}),
-    )
-    extra_data: dict[str, Any] = attr.Factory(dict)
+    measure_method: MeasurementMethod = MeasurementMethod.BLOOD_SAMPLE
+    extra_data: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if self.measure_method is not MeasurementMethod.BLOOD_SAMPLE:
+            raise ValueError("KetoneReading.measure_method must be BLOOD_SAMPLE")
 
     def as_csv(self, unit: Unit) -> str:
         # Returns the reading as a formatted comma-separated value string.
@@ -108,15 +106,16 @@ class KetoneReading:
             self.comment,
         )
 
-
-@attr.s(auto_attribs=True)
+@dataclass
 class TimeAdjustment:
     timestamp: datetime.datetime
     old_timestamp: datetime.datetime
-    measure_method: MeasurementMethod = attr.ib(
-        default=MeasurementMethod.TIME, validator=attr.validators.in_(MeasurementMethod)
-    )
-    extra_data: dict[str, Any] = attr.Factory(dict)
+    measure_method: MeasurementMethod = MeasurementMethod.TIME
+    extra_data: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not isinstance(self.measure_method, MeasurementMethod):
+            self.measure_method = MeasurementMethod(self.measure_method)
 
     def as_csv(self, unit: Unit) -> str:
         del unit
@@ -126,11 +125,9 @@ class TimeAdjustment:
             self.old_timestamp,
         )
 
-
 AnyReading = Union[GlucoseReading, KetoneReading, TimeAdjustment]
 
-
-@attr.s(auto_attribs=True)
+@dataclass
 class MeterInfo:
     # General information about the meter.
  
@@ -143,16 +140,15 @@ class MeterInfo:
     model: str
     serial_number: str = "N/A"
     version_info: Sequence[str] = ()
-    native_unit: Unit = attr.ib(default=Unit.MG_DL, validator=attr.validators.in_(Unit))
+    native_unit: Unit = Unit.MG_DL
     patient_name: Optional[str] = None
+
+    def __post_init__(self):
+        if not isinstance(self.native_unit, Unit):
+            self.native_unit = Unit(self.native_unit)
 
     def __str__(self) -> str:
         version_information_string = "N/A"
         if self.version_info:
-            version_information_string = "\n                ".join(
-                self.version_info
-            ).strip()
-
-        base_output = f"{self.model},{self.serial_number},{version_information_string},{self.native_unit.value},{self.patient_name}"
-
-        return base_output
+            version_information_string = "\n                ".join(self.version_info).strip()
+        return f"{self.model},{self.serial_number},{version_information_string},{self.native_unit.value},{self.patient_name}"
