@@ -82,6 +82,11 @@ class GlucoseReading:
             self.measure_method.value,
             self.comment,
         )
+    
+    def save_to_file(self, List: list) -> str:
+        with open('readings.csv', 'w') as f:
+            for line in List:
+                f.write(f"{line}\n")
 
 @dataclass
 class KetoneReading:

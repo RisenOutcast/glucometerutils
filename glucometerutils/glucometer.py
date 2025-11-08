@@ -109,8 +109,13 @@ def main():
                 if not isinstance(reading, common.KetoneReading)
             )
 
+            readings_csv_list = ["Timestamp,GlucoseValue,MealValue,MeasureSource,Comment"]
+
             for reading in sorted(readings, key=lambda r: r.timestamp):
-                readings_count +=1
+                readings_csv_list.append(reading.as_csv(unit))
+                readings_count += 1
+
+            reading.save_to_file(readings_csv_list)
                 
             logging.info("Dumped %d readings from device.", readings_count)
         else:
