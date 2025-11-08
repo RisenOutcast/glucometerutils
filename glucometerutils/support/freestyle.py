@@ -91,16 +91,6 @@ class FreeStyleHidDevice(driver.GlucometerDevice):
             return None
         return patient_name
 
-    def set_patient_name(self, name: str) -> None:
-        try:
-            encoded_name = name.encode(self._encoding)
-        except UnicodeDecodeError as error:
-            raise ValueError(
-                f"Error encoding patient name to {self._encoding}."
-            ) from error
-
-        self._session.send_text_command(b"$ptname," + encoded_name)
-
     def get_datetime(self) -> datetime.datetime:
         # Gets the date and time as reported by the device.
 
@@ -121,15 +111,3 @@ class FreeStyleHidDevice(driver.GlucometerDevice):
             return datetime.datetime(year + 2000, month, day, hour, minute)
         except ValueError:
             raise exceptions.InvalidDateTime()
-
-    def _set_device_datetime(self, date: datetime.datetime) -> datetime.datetime:
-        # The format used by the FreeStyle devices is not composable based on
-        # standard strftime() (namely it includes no leading zeros), so we need
-        # to build it manually.
-        date_cmd = f"$date,{date.month},{date.day},{date.year - 2000}"
-        time_cmd = f"$time,{date.hour},{date.minute}"
-
-        self._session.send_text_command(bytes(date_cmd, "ascii"))
-        self._session.send_text_command(bytes(time_cmd, "ascii"))
-
-        return self.get_datetime()
