@@ -123,6 +123,9 @@ def main():
     except exceptions.Error as err:
         logging.error(f"Error while executing '{args.action}': {err}")
         return 1
+    except Exception:
+        logging.exception("Unexpected error while executing '%s'", args.action)
+        return 1
 
     device.disconnect()
     return 0
