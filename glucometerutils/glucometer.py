@@ -10,6 +10,7 @@ import argparse
 import logging
 from pathlib import Path
 from config import FOLDERS
+from __about__ import __version__
 
 def main():
     def get_logs_dir():
@@ -56,6 +57,13 @@ def main():
             "Select the path to the glucometer device. Some devices require "
             "this argument, others will try autodetection."
         ),
+    )
+
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=__version__,
+        help="Print out the programs version information."
     )
 
     subparsers.add_parser("info", help="Display information about the meter.")

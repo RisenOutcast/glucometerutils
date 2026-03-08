@@ -8,19 +8,19 @@
 from dataclasses import dataclass, field
 import datetime
 import enum
+import logging
+import os
 from typing import Any, Optional, Union, Sequence
 
 class Unit(enum.Enum):
     MG_DL = "mg/dL"
     MMOL_L = "mmol/L"
 
-
 # Constants for meal information
 class Meal(enum.Enum):
     NONE = ""
     BEFORE = "Before Meal"
     AFTER = "After Meal"
-
 
 # Constants for measure method
 class MeasurementMethod(enum.Enum):
@@ -84,9 +84,14 @@ class GlucoseReading:
         )
     
     def save_to_file(self, List: list) -> str:
-        with open('readings.csv', 'w') as f:
+        file_name = 'readings.csv'
+        full_path = os.path.abspath(file_name)
+        
+        with open(full_path, 'w') as f:
             for line in List:
                 f.write(f"{line}\n")
+                
+        logging.info(f"File successfully saved to: {full_path}")
 
 @dataclass
 class KetoneReading:
